@@ -1,32 +1,32 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Image, ListImagesResponse } from "../../types/api";
 import { ImageCard } from "../image-card";
 import { SearchInput } from "../search-input";
 import { FileUploadInput } from "../file-upload-input";
 import { Flex, Group, SimpleGrid, Text } from "@mantine/core";
 
-interface GalleryProps {
-  initialImages?: Image[];
-}
+export const Gallery = () => {
+  const [images, setImages] = useState<Image[]>([]);
 
-export const Gallery = ({ initialImages = [] }: GalleryProps) => {
-  const [images, setImages] = useState<Image[]>(initialImages);
-
-  const refetchImages = useCallback(async () => {
-    const imageData: ListImagesResponse = await fetch(
-      "http://localhost:3000/api/images"
-    ).then((res) => res.json());
+  const fetchAllImages = useCallback(async () => {
+    const imageData: ListImagesResponse = await fetch("/api/images").then(
+      (res) => res.json()
+    );
 
     setImages(imageData.images);
   }, []);
 
+  useEffect(() => {
+    fetchAllImages();
+  }, []);
+
   const fetchImagesByFileName = useCallback(async (fileName: string) => {
     try {
-      const imageResponse = await fetch(
-        `http://localhost:3000/api/images/${fileName}`
-      ).then((res) => res.json());
+      const imageResponse = await fetch(`/api/images/${fileName}`).then((res) =>
+        res.json()
+      );
 
       setImages(imageResponse.images);
     } catch (error) {
@@ -36,13 +36,13 @@ export const Gallery = ({ initialImages = [] }: GalleryProps) => {
 
   const handleDelete = useCallback(
     async (fileName: string) => {
-      await fetch(`http://localhost:3000/api/images/${fileName}`, {
+      await fetch(`/api/images/${fileName}`, {
         method: "DELETE",
       });
 
-      await refetchImages();
+      await fetchAllImages();
     },
-    [refetchImages]
+    [fetchAllImages]
   );
 
   const searchOptions = useMemo(
@@ -56,13 +56,13 @@ export const Gallery = ({ initialImages = [] }: GalleryProps) => {
         <SearchInput
           onSearch={fetchImagesByFileName}
           disabled={!images.length}
-          onClear={refetchImages}
+          onClear={fetchAllImages}
           options={searchOptions}
         />
-        <FileUploadInput onUpload={refetchImages} />
+        <FileUploadInput onUpload={fetchAllImages} />
       </Group>
 
-      <SimpleGrid cols={{ base: 1, sm: 2, lg: 3, xl: 4 }}>
+      <SimpleGrid cols={{ base: 1, md: 2, xl: 3 }}>
         {images.length ? (
           images.map((image) => (
             <ImageCard

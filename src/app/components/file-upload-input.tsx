@@ -23,7 +23,7 @@ export const FileUploadInput = ({ onUpload }: FileUploadInputProps) => {
       const formData = new FormData();
       formData.append("image", fileToUpload);
 
-      await fetch("http://localhost:3000/api/images/upload", {
+      await fetch("/api/images/upload", {
         method: "POST",
         body: formData,
       });
