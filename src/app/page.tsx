@@ -1,17 +1,16 @@
 import styles from "./page.module.css";
 import { Gallery } from "./components/gallery";
-import { SearchInput } from "./components/search-input";
-import { FileUploadInput } from "./components/file-upload-input";
+import { ListImagesResponse } from "./types/api";
 
-export default function Home() {
+export default async function Home() {
+  const imageData: ListImagesResponse = await fetch(
+    "http://localhost:3000/api/images"
+  ).then((res) => res.json());
 
+  const initialImages = imageData.images;
   return (
-    <div className={styles.page}>
-      <section className={styles.inputSection}>
-        <SearchInput />
-        <FileUploadInput />
-      </section>
-      <Gallery />
-    </div>
+    <main className={styles.page}>
+      <Gallery initialImages={initialImages} />
+    </main>
   );
 }

@@ -3,44 +3,86 @@
 import { useCallback, useEffect, useState } from "react";
 import { Image, ListImagesResponse } from "../types/api";
 import { ImageCard } from "./image-card";
+import { SearchInput } from "./search-input";
+import { FileUploadInput } from "./file-upload-input";
+import styles from "./gallery.module.css";
 
-export const Gallery = () => {
-
-const [images, setImages] = useState<Image[]>()
-
-const fetchImages = async () => {
-    const imageData: ListImagesResponse = await fetch('http://localhost:3000/api/images').then(res => res.json());
-    
-    setImages(imageData.images)
+interface GalleryProps {
+  initialImages?: Image[];
 }
 
-useEffect(() => void fetchImages(), [])
+export const Gallery = ({ initialImages = [] }: GalleryProps) => {
+  const [images, setImages] = useState<Image[]>(initialImages);
 
-const handleDelete = useCallback(async (fileName: string) => {
-    console.log(`${fileName} clicked to delete`)
+  const refetchImages = useCallback(async () => {
+    const imageData: ListImagesResponse = await fetch(
+      "http://localhost:3000/api/images"
+    ).then((res) => res.json());
 
-    await fetch(`http://localhost:3000/api/images/${fileName}`, {
-        method: "DELETE"
-     })
-}, []);
+    setImages(imageData.images);
+  }, []);
 
-    if (images?.length === 0) {
-        return <p>No images to display.</p>;
+  const fetchImagesByFileName = useCallback(async (fileName: string) => {
+    try {
+      const imageResponse = await fetch(
+        `http://localhost:3000/api/images/${fileName}`
+      ).then((res) => res.json());
+
+      setImages(imageResponse.images);
+    } catch (error) {
+      console.error(error);
     }
+  }, []);
 
-    return (
-        <div
+  const handleDelete = useCallback(
+    async (fileName: string) => {
+      await fetch(`http://localhost:3000/api/images/${fileName}`, {
+        method: "DELETE",
+      });
+
+      await refetchImages();
+    },
+    [refetchImages]
+  );
+
+  return (
+    <main
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        height: "100%",
+        gap: "32px",
+      }}
+    >
+      <section className={styles.inputSection}>
+        <SearchInput
+          onSearch={fetchImagesByFileName}
+          disabled={!images.length}
+          onClear={refetchImages}
+        />
+        <FileUploadInput onUpload={refetchImages} />
+      </section>
+      <section
         style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(2, 1fr)",
-            gap: "16px",
-            width: "100%",
-            overflowY: "auto",
+          display: "grid",
+          gridTemplateColumns: "repeat(2, 1fr)",
+          gap: "16px",
+          width: "100%",
+          overflowY: "auto",
         }}
-        >
-        {images?.map((img, index) => (
-            <ImageCard key={index} image={img} onDelete={handleDelete} />
-        ))}
-        </div>
-    );
-}
+      >
+        {images.length ? (
+          images.map((image) => (
+            <ImageCard
+              key={image.fileName}
+              image={image}
+              onDelete={handleDelete}
+            />
+          ))
+        ) : (
+          <p>No images to display.</p>
+        )}
+      </section>
+    </main>
+  );
+};

@@ -3,24 +3,22 @@ import { NextResponse } from "next/server";
 import fs from "fs";
 
 export async function GET() {
+  const images: Image[] = [];
 
-const images: Image[] = [];
+  const uploadDir = process.cwd() + "/public/uploads";
 
-const uploadDir = process.cwd() + '/public/uploads';
-
-if (fs.existsSync(uploadDir)) {
+  if (fs.existsSync(uploadDir)) {
     const files = fs.readdirSync(uploadDir);
 
-    console.log('files in upload dir', files);
+    console.log("files in upload dir", files);
 
-    files.forEach(file => {
-        images.push({
-            fileName: file,
-            url: `/uploads/${file}`,
-        });
+    files.forEach((file) => {
+      images.push({
+        fileName: file,
+        url: `/uploads/${file}`,
+      });
     });
-}
+  }
 
-return NextResponse.json<ListImagesResponse>({ images });
-
+  return NextResponse.json<ListImagesResponse>({ images });
 }
