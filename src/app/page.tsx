@@ -8,15 +8,13 @@ export default async function Home() {
   const imageData: ListImagesResponse = await fetch('http://localhost:3000/api/images').then(res => res.json());
   const images = imageData.images || [];
 
-  const imageUrls = images.map(img => img.url);
-
   return (
     <div className={styles.page}>
       <section className={styles.inputSection}>
         <SearchInput />
         <FileUploadInput />
       </section>
-      <Gallery imageUrls={imageUrls}/>
+      <Gallery images={images}/>
     </div>
   );
 }

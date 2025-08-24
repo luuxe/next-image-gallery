@@ -4,7 +4,7 @@ export interface UploadResponse {
 }
 
 export interface Image {
-  id: string;
+  fileName: string;
   url: string;
 }
 
