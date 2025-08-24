@@ -8,20 +8,14 @@ interface FileUploadInputProps {
 
 export const FileUploadInput = ({ onUpload }: FileUploadInputProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
-  const [fileToUpload, setFileToUpload] = useState<File | null>(null);
 
-  const handleFileChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (e.target.files && e.target.files.length > 0) {
-        setFileToUpload(e.target.files[0]);
-      }
-    },
-    []
-  );
+  const onUploadClick = useCallback(() => {
+    inputRef.current?.click();
+  }, []);
 
   const handleUploadFile = useCallback(
-    async (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
+    async (e: React.ChangeEvent<HTMLInputElement>) => {
+      const fileToUpload = e.target.files?.[0];
 
       if (!fileToUpload) return;
 
@@ -34,26 +28,27 @@ export const FileUploadInput = ({ onUpload }: FileUploadInputProps) => {
       });
 
       onUpload?.("bleh");
-
-      if (inputRef.current?.value) {
-        inputRef.current.value = "";
-      }
     },
-    [fileToUpload]
+    [onUpload]
   );
 
   return (
-    <form onSubmit={handleUploadFile}>
+    <>
       <input
         type="file"
         ref={inputRef}
         name="file"
         accept="image/*"
-        onChange={handleFileChange}
+        onChange={handleUploadFile}
+        style={{ display: "none" }}
       />
-      <button type="submit" style={{ padding: "1px 4px" }}>
+      <button
+        type="submit"
+        style={{ padding: "1px 4px" }}
+        onClick={onUploadClick}
+      >
         Upload
       </button>
-    </form>
+    </>
   );
 };
