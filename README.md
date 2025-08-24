@@ -16,14 +16,15 @@ A simple image gallery built with Next.js App Router, TypeScript, and Mantine UI
 - Mantine UI
 - Jest Testing
 
-**Total development time to current product: ~8hrs**
+**Total development time to current product: ~10hrs**
 - Time to MVP: ~5hrs
 - Additional development time for redesign using MantineUI, adding Jest, bug fixing/clean up: ~3hrs
+- Last minute derp + fix Next.js not serving static files post build: ~1.5hrs
 
 **Future iterations:**
 1. Optimizations
 - Implement Tanstack/React Query, create custom query hooks for endpoints to handle caching, loading, error, and refetch states.
-- Replace local disk storage implementation with a production-ready solution (S3 or other cloud storage for image URLs)
+- Replace local disk storage implementation with a production-ready solution (S3 or other cloud storage for image URLs) cause why didn't i just do that in the first place
 - Add server-side pagination or infinite scroll for large datasets.
 
 2. Features
@@ -50,6 +51,11 @@ Install dependencies
 
 ```bash
 npm install
+```
+
+Run the build
+```bash
+npm run build
 ```
 
 Start the app
