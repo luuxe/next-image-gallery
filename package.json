@@ -13,6 +13,7 @@
   "dependencies": {
     "@mantine/core": "^8.2.7",
     "@mantine/hooks": "^8.2.7",
+    "mime": "^4.0.7",
     "next": "15.5.0",
     "react": "19.1.0",
     "react-dom": "19.1.0"
@@ -23,6 +24,7 @@
     "@testing-library/jest-dom": "^6.8.0",
     "@testing-library/react": "^16.3.0",
     "@types/jest": "^30.0.0",
+    "@types/mime": "^3.0.4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

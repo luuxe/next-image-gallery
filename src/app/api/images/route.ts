@@ -5,7 +5,7 @@ import fs from "fs";
 export async function GET() {
   const images: Image[] = [];
 
-  const uploadDir = process.cwd() + "/public/uploads";
+  const uploadDir = process.cwd() + "/uploads";
 
   if (fs.existsSync(uploadDir)) {
     const files = fs.readdirSync(uploadDir);
@@ -15,7 +15,7 @@ export async function GET() {
     files.forEach((file) => {
       images.push({
         fileName: file,
-        url: `/uploads/${file}`,
+        url: `/api/images/${file}`,
       });
     });
   }

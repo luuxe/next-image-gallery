@@ -23,7 +23,7 @@ export async function POST(req: Request) {
   const arrayBuffer = await file.arrayBuffer();
   const buffer = Buffer.from(arrayBuffer);
 
-  const uploadDir = path.join(process.cwd(), "public", "uploads");
+  const uploadDir = path.join(process.cwd(), "uploads");
 
   try {
     if (!fs.existsSync(uploadDir)) {
@@ -38,7 +38,7 @@ export async function POST(req: Request) {
     );
   }
 
-  const fileUrl = `/uploads/${file.name}`;
+  const fileUrl = `/api/images/${file.name}`;
 
   console.log("file url", fileUrl);
 
