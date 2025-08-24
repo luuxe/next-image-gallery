@@ -16,8 +16,8 @@ A simple image gallery built with Next.js App Router, TypeScript, and Mantine UI
 - Mantine UI
 - Jest Testing
 
-**Total development time to current product: ~11hrs**
-- Time to MVP: ~5hrs
+**Total development time to current product: ~10hrs**
+- Time to MVP: ~5hrs, mostly due to app router and researching reading/writing to the file system
 - Additional development time for redesign using MantineUI, adding Jest, bug fixing/clean up: ~3hrs
 - Last minute derp + fix Next.js not serving static files post build: ~2hrs
 
