@@ -1,36 +1,76 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next Image Gallery
+
+A simple image gallery built with Next.js App Router, TypeScript, and Mantine UI, featuring image upload, search, listing, and deletion.
+
+### 1. User Requirements
+
+- Upload images and store them using an API
+- Search for images by name using an input box and the API
+- List all uploaded images
+- Delete single image
+
+### 2. Project Overview
+
+- Next.js App Router
+- TypeScript
+- Mantine UI
+- Jest Testing
+
+**Total development time to current product: ~8hrs**
+- Time to MVP: ~5hrs
+- Additional development time for redesign using MantineUI, adding Jest, bug fixing/clean up: ~3hrs
+
+**Future iterations:**
+1. Optimizations
+- Implement Tanstack/React Query, create custom query hooks for endpoints to handle caching, loading, error, and refetch states.
+- Replace local disk storage implementation with a production-ready solution (S3 or other cloud storage for image URLs)
+- Add server-side pagination or infinite scroll for large datasets.
+
+2. Features
+- Expand to multi select file input, update `POST api/images/uploads` to handle an array of files vs. current implementation of single file upload.
+- Drag & drop uploader component
+- Handle an expanded state per image on click - display image in a modal overlay w/ metadata and CTA buttons
+- Super super cherry on top: run images through Computer Vision or something to generate keywords for each image & add keyword search
+
+3. Infrastructure
+- Handle multiple environments
+- Pre push hooks to run test, type checks, a11y checks, lint etc
+- Use feature branching vs. YOLO pushing to main
+- Deploy on main merge (deploy in general)
 
 ## Getting Started
 
-First, run the development server:
+Clone the repo
+
+```bash
+git clone git@github.com:luuxe/next-image-gallery.git
+```
+
+Install dependencies
+
+```bash
+npm install
+```
+
+Start the app
+
+```bash
+npm start
+```
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## Development
+
+Install dependencies
+
+```bash
+npm install
+```
+
+Run the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
