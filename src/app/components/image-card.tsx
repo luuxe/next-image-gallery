@@ -9,6 +9,8 @@ console.log("Rendering ImageCard with url:", url);
                 alt="Image"
                 fill
                 style={{ objectFit: "cover" }}
+                priority
+                sizes='40vw'
             />
         </div>
     )
