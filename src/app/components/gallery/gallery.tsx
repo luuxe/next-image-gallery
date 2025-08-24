@@ -46,7 +46,7 @@ export const Gallery = () => {
   );
 
   const searchOptions = useMemo(
-    () => images.map((image) => image.fileName),
+    () => images?.map((image) => image.fileName),
     [images]
   );
 
