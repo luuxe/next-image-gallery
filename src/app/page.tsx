@@ -1,5 +1,5 @@
 import styles from "./page.module.css";
-import { Gallery } from "./components/gallery";
+import { Gallery } from "./components/gallery/";
 import { ListImagesResponse } from "./types/api";
 
 export default async function Home() {

@@ -1,10 +1,10 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
-import { Image, ListImagesResponse } from "../types/api";
-import { ImageCard } from "./image-card";
-import { SearchInput } from "./search-input";
-import { FileUploadInput } from "./file-upload-input";
+import { useCallback, useState } from "react";
+import { Image, ListImagesResponse } from "../../types/api";
+import { ImageCard } from "../image-card";
+import { SearchInput } from "../search-input";
+import { FileUploadInput } from "../file-upload-input";
 import styles from "./gallery.module.css";
 
 interface GalleryProps {
