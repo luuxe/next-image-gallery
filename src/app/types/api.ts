@@ -1,6 +1,6 @@
 export interface UploadResponse {
   success: boolean;
-  name?: string;
+  url?: string;
 }
 
 export interface Image {

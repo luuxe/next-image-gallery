@@ -1,8 +1,13 @@
 "use client"
 
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 
-export const FileUploadInput = () => {
+interface FileUploadInputProps {
+ onUpload?: (bleh: any) => void;
+}
+
+export const FileUploadInput = ({ onUpload }: FileUploadInputProps) => {
+    const inputRef = useRef<HTMLInputElement>(null)
     const [fileToUpload, setFileToUpload] = useState<File | null>(null);
 
     const handleFileChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -11,18 +16,29 @@ export const FileUploadInput = () => {
         }
     }, []);
 
-    const handleUploadFile = useCallback(async () => {
+    const handleUploadFile = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
         if (!fileToUpload) return;
 
         const formData = new FormData();
         formData.append("image", fileToUpload);
 
-        // TODO: replace with actual upload endpoint
+        await fetch("http://localhost:3000/api/images/upload", {
+            method: "POST",
+            body: formData,
+        });
+
+        onUpload?.("bleh");
+
+        if (inputRef.current?.value) {
+            inputRef.current.value = ""
+        };
     }, [fileToUpload]);
 
     return (
        <form onSubmit={handleUploadFile}>
-        <input type="file" name="file" accept="image/*" onChange={handleFileChange} />
+        <input type="file" ref={inputRef} name="file" accept="image/*" onChange={handleFileChange} />
         <button type="submit" style={{ padding: '1px 4px'}}>Upload</button>
        </form>
     );
