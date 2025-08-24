@@ -1,9 +1,10 @@
 "use client";
 
+import { Button } from "@mantine/core";
 import { useCallback, useRef, useState } from "react";
 
 interface FileUploadInputProps {
-  onUpload?: (bleh: any) => void;
+  onUpload?: () => void;
 }
 
 export const FileUploadInput = ({ onUpload }: FileUploadInputProps) => {
@@ -27,7 +28,7 @@ export const FileUploadInput = ({ onUpload }: FileUploadInputProps) => {
         body: formData,
       });
 
-      onUpload?.("bleh");
+      onUpload?.();
     },
     [onUpload]
   );
@@ -42,13 +43,9 @@ export const FileUploadInput = ({ onUpload }: FileUploadInputProps) => {
         onChange={handleUploadFile}
         style={{ display: "none" }}
       />
-      <button
-        type="submit"
-        style={{ padding: "1px 4px" }}
-        onClick={onUploadClick}
-      >
-        Upload
-      </button>
+      <Button variant="filled" onClick={onUploadClick}>
+        Upload Image
+      </Button>
     </>
   );
 };

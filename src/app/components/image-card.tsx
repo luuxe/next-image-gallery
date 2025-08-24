@@ -1,5 +1,7 @@
-import Image from "next/image";
+import NextImage from "next/image";
 import { Image as ImageType } from "../types/api";
+import { Card, Text, Button, Group, Flex } from "@mantine/core";
+import { Image as MantineImage } from "@mantine/core";
 
 interface ImageCardProps {
   image: ImageType;
@@ -11,44 +13,36 @@ export const ImageCard = ({ image, onDelete }: ImageCardProps) => {
   const handleDelete = (fileName: string) => onDelete?.(fileName);
 
   return (
-    <div
-      style={{
-        border: "1px solid gray",
-        position: "relative",
-        width: "100%",
-        paddingBottom: "100%",
-      }}
-    >
-      <div
-        style={{
-          padding: "4px",
-          position: "absolute",
-          zIndex: "10",
-          background: "white",
-          width: "100%",
-          color: "black",
-          display: "flex",
-          justifyContent: "space-between",
-        }}
-      >
-        <p>{fileName}</p>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            handleDelete(fileName);
-          }}
+    <Card shadow="sm" radius="md" withBorder>
+      <Card.Section>
+        <MantineImage
+          src={url}
+          alt={fileName}
+          height={400}
+          component={NextImage}
+          width={200}
+          unoptimized
+        />
+        <Flex
+          justify="space-between"
+          align="center"
+          gap="md"
+          style={{ padding: 10 }}
         >
-          delete
-        </button>
-      </div>
-      <Image
-        src={url}
-        alt="Image"
-        fill
-        style={{ objectFit: "cover" }}
-        priority
-        sizes="40vw"
-      />
-    </div>
+          <Text size="sm" c="dimmed" flex="1" lineClamp={1}>
+            {fileName}
+          </Text>
+
+          <Button
+            color="red"
+            radius="md"
+            size="xs"
+            onClick={() => handleDelete(fileName)}
+          >
+            Delete
+          </Button>
+        </Flex>
+      </Card.Section>
+    </Card>
   );
 };

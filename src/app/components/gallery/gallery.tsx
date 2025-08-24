@@ -1,11 +1,11 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { Image, ListImagesResponse } from "../../types/api";
 import { ImageCard } from "../image-card";
 import { SearchInput } from "../search-input";
 import { FileUploadInput } from "../file-upload-input";
-import styles from "./gallery.module.css";
+import { Flex, Group, SimpleGrid, Text } from "@mantine/core";
 
 interface GalleryProps {
   initialImages?: Image[];
@@ -45,32 +45,24 @@ export const Gallery = ({ initialImages = [] }: GalleryProps) => {
     [refetchImages]
   );
 
+  const searchOptions = useMemo(
+    () => images.map((image) => image.fileName),
+    [images]
+  );
+
   return (
-    <main
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        height: "100%",
-        gap: "32px",
-      }}
-    >
-      <section className={styles.inputSection}>
+    <Flex direction="column" gap="xl">
+      <Group gap="xl" justify="space-between">
         <SearchInput
           onSearch={fetchImagesByFileName}
           disabled={!images.length}
           onClear={refetchImages}
+          options={searchOptions}
         />
         <FileUploadInput onUpload={refetchImages} />
-      </section>
-      <section
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(2, 1fr)",
-          gap: "16px",
-          width: "100%",
-          overflowY: "auto",
-        }}
-      >
+      </Group>
+
+      <SimpleGrid cols={{ base: 1, sm: 2, lg: 3, xl: 4 }}>
         {images.length ? (
           images.map((image) => (
             <ImageCard
@@ -80,9 +72,9 @@ export const Gallery = ({ initialImages = [] }: GalleryProps) => {
             />
           ))
         ) : (
-          <p>No images to display.</p>
+          <Text size="lg">No images to display.</Text>
         )}
-      </section>
-    </main>
+      </SimpleGrid>
+    </Flex>
   );
 };

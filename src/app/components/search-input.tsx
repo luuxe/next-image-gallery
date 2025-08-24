@@ -1,54 +1,33 @@
 "use client";
 
-import { useRef } from "react";
+import { Select } from "@mantine/core";
 
 interface SearchInputProps {
   onSearch?: (fileName: string) => void;
   disabled?: boolean;
   onClear?: () => void;
+  options?: string[];
 }
 
 export const SearchInput = ({
   onSearch,
   disabled,
   onClear,
-}: SearchInputProps) => {
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  const handleClear = () => {
-    if (inputRef.current) {
-      inputRef.current.value = "";
-    }
-  };
-
-  return (
-    <>
-      <input
-        ref={inputRef}
-        disabled={disabled}
-        type="text"
-        placeholder="Search images..."
-        style={{
-          padding: "4px",
-          maxWidth: "40vw",
-          flex: "1",
-        }}
-        onKeyDown={(e) => {
-          if (e.key === "Enter") {
-            onSearch?.(e.currentTarget.value);
-          }
-        }}
-      />
-      {inputRef.current?.value && (
-        <button
-          onClick={() => {
-            handleClear();
-            onClear?.();
-          }}
-        >
-          Clear Search
-        </button>
-      )}
-    </>
-  );
-};
+  options = [],
+}: SearchInputProps) => (
+  <Select
+    placeholder="Search images..."
+    data={options}
+    searchable
+    clearable
+    style={{ flex: 1, maxWidth: 400 }}
+    disabled={disabled}
+    onChange={(value) => {
+      if (value) {
+        onSearch?.(value);
+      } else {
+        onClear?.();
+      }
+    }}
+  />
+);

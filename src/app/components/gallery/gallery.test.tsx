@@ -1,5 +1,5 @@
 import React from "react";
-import { render } from "@testing-library/react";
+import { render } from "../../utils/render";
 import { Gallery } from "./gallery";
 
 describe("Gallery", () => {
