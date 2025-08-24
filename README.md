@@ -16,10 +16,10 @@ A simple image gallery built with Next.js App Router, TypeScript, and Mantine UI
 - Mantine UI
 - Jest Testing
 
-**Total development time to current product: ~10hrs**
+**Total development time to current product: ~11hrs**
 - Time to MVP: ~5hrs
 - Additional development time for redesign using MantineUI, adding Jest, bug fixing/clean up: ~3hrs
-- Last minute derp + fix Next.js not serving static files post build: ~1.5hrs
+- Last minute derp + fix Next.js not serving static files post build: ~2hrs
 
 **Future iterations:**
 1. Optimizations
@@ -31,7 +31,7 @@ A simple image gallery built with Next.js App Router, TypeScript, and Mantine UI
 - Expand to multi select file input, update `POST api/images/uploads` to handle an array of files vs. current implementation of single file upload.
 - Drag & drop uploader component
 - Handle an expanded state per image on click - display image in a modal overlay w/ metadata and CTA buttons
-- Super super cherry on top: run images through Computer Vision or something to generate keywords for each image & add keyword search
+- Super super cherry on top: run images through Computer Vision or something to generate keywords for each image & add keyword search + alt text
 
 3. Infrastructure
 - Handle multiple environments
