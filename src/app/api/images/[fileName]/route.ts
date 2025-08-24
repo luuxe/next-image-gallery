@@ -9,8 +9,7 @@ export async function GET(
   { params }: { params: Promise<{ fileName: string }> }
 ) {
   const { fileName } = await params;
-
-  const filePath = path.resolve(process.cwd(), `uploads/${fileName}`);
+  const filePath = path.resolve(process.cwd(), "uploads", fileName);
   if (!fs.existsSync(filePath)) {
     return NextResponse.json(
       { message: `Could not find ${fileName}` },
@@ -34,8 +33,7 @@ export async function DELETE(
   { params }: { params: Promise<{ fileName: string }> }
 ) {
   const { fileName } = await params;
-
-  const filePath = process.cwd() + `/uploads/${fileName}`;
+  const filePath = path.resolve(process.cwd(), "uploads", fileName);
   if (fs.existsSync(filePath)) {
     fs.unlinkSync(filePath);
   } else {

@@ -24,8 +24,8 @@ export const Gallery = () => {
 
   const fetchImagesByFileName = useCallback(async (fileName: string) => {
     try {
-      const imageResponse = await fetch(`/api/images/${fileName}`).then((res) =>
-        res.json()
+      const imageResponse = await fetch(`/api/images?search=${fileName}`).then(
+        (res) => res.json()
       );
 
       setImages(imageResponse.images);

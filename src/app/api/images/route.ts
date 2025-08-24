@@ -1,18 +1,24 @@
 import { Image, ListImagesResponse } from "@/app/types/api";
 import { NextResponse } from "next/server";
 import fs from "fs";
+import path from "path";
 
-export async function GET() {
+export async function GET(req: Request) {
+  const { searchParams } = new URL(req.url);
+  const search = searchParams.get("search");
+
   const images: Image[] = [];
-
-  const uploadDir = process.cwd() + "/uploads";
+  const uploadDir = path.resolve(process.cwd(), "uploads");
 
   if (fs.existsSync(uploadDir)) {
     const files = fs.readdirSync(uploadDir);
+    const filteredFiles = search
+      ? files.filter((file) =>
+          file.toLowerCase().includes(search.toLowerCase())
+        )
+      : files;
 
-    console.log("files in upload dir", files);
-
-    files.forEach((file) => {
+    filteredFiles.forEach((file) => {
       images.push({
         fileName: file,
         url: `/api/images/${file}`,
